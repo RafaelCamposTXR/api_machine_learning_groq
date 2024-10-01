@@ -3,6 +3,8 @@ import os
 import json
 
 client = Groq(api_key="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")
+# client = Groq(api_key=os.getenv('GROQ_API_KEY'))
+
 MODEL = 'llama3-70b-8192'
 
 def generate_response(prompt):
@@ -12,7 +14,8 @@ def run_conversation(user_prompt, style):
     messages = [
         {
             "role": "system",
-            "content": f'You are a helpful assistant who responds in a {style} tone, and in portuguese.'
+            # "content": f'You are a helpful assistant who responds in a {style} tone, and in portuguese.',
+            "content": f'Você é um assistente atencioso que responde em um tom {style}, e em português. Você não se desculpa por confusões, apenas dá a resposta'
         },
         {
             "role": "user",
@@ -71,7 +74,7 @@ def run_conversation(user_prompt, style):
             model=MODEL,
             messages=messages
         )  # consegue uma nova resposta do modelo
-        print(second_response.choices[0].message.content)  # exibe a resposta final
+        print(f'RESPOSTA: {second_response.choices[0].message.content}')  # exibe a resposta final
 
 style= input("ESTILO: ")
 user_prompt = input("PROMPT: ")
